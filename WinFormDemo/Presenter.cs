@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.SqlServer.Server;
 
 namespace WinFormDemo
 {
@@ -36,7 +37,7 @@ namespace WinFormDemo
          */
         public void SolveEquation()
         {
-            if (ValidateInput(m_Model.equation))
+            if (ValidateInput())
             {
                 m_View.EquationLabelValue = m_Model.Solve(m_Model.equation);
             } else
@@ -48,16 +49,16 @@ namespace WinFormDemo
         /* 
          * Calls the model to update the equation with the string it is given.
          */
-        public void UpdateEquation(String text)
+        public void UpdateEquation()
         {
-            m_Model.Set(FormatInput(text));
+            m_Model.equation = FormatInput();
         }
        
         /*
          * Checks to see if a valid equation is entered. This doesn't look pretty,
          *  but it works.
          */
-        public bool ValidateInput(string input)
+        private bool ValidateInput()
         {
             List<char> opsList = new List<char>();
             opsList.Add('.');
@@ -65,15 +66,15 @@ namespace WinFormDemo
             opsList.Add('*');
             opsList.Add('+');
             // Base Cases
-            if (input.Equals("") || input.Contains("/0") || input.Contains("/-0") 
-                || opsList.Contains(input[0]) || opsList.Contains(input[input.Length - 1]))
+            if (m_Model.equation.Equals("") || m_Model.equation.Contains("/0") || m_Model.equation.Contains("/-0") 
+                || opsList.Contains(m_Model.equation[0]) || opsList.Contains(m_Model.equation[m_Model.equation.Length - 1]))
             {
                 return false;
             }
             else
             {
                 bool prevIsNum = false;
-                foreach (char c in input)
+                foreach (char c in m_Model.equation)
                 {
                     if (char.IsDigit(c) || c == '-')
                     {
@@ -95,13 +96,14 @@ namespace WinFormDemo
                 return true;
             }                        
         }
+        
         /*
          * Gets rid of leading/trailing spaces and spaces inbetween nums/operators so that
          * the calculator can handle it correctly.
          */
-        public string FormatInput(string input)
+        private string FormatInput()
         {
-            string formattedInput = input.Trim();
+            string formattedInput = m_View.UserInputTextValue.Trim();
             formattedInput = formattedInput.Replace(" ", "");
             return formattedInput;
         }

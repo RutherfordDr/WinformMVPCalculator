@@ -18,15 +18,13 @@ namespace WinFormDemo
     public partial class Form1 : Form, IView
     {
         private Presenter presenter = null;
-        private readonly Model m_Model;
         /*
          * Constructor for Form1.
          */
         public Form1(Model model)
         {
-            m_Model = model;
             InitializeComponent();
-            presenter = new Presenter(this, m_Model);
+            presenter = new Presenter(this, model);
         }
 
         // Getter/Setter for UserInputTextValue. This corresponds to the forms UserInputText object.
@@ -55,11 +53,12 @@ namespace WinFormDemo
         }
         
         /*
-         * 
+         * Tells presenter to update the equation and then solve the equation which also validates
+         * if the equation is in the proper form.
          */
-        private void equalsButton_Click(object sender, EventArgs e)
+        private void EqualsButton_Click(object sender, EventArgs e)
         {
-            presenter.UpdateEquation(this.UserInputText.Text);
+            presenter.UpdateEquation();
             presenter.SolveEquation();
         }
         
@@ -72,25 +71,25 @@ namespace WinFormDemo
         }
        
         /*
-         * 
+         * These don't go through presenter because they are fairly simple. They update
+         * the input line. The model or presenter don't need to know these are changed until
+         * the user wants to solve the equation.
          */
-        private void numberButton_Click(object sender, EventArgs e)
+        private void NumberButtonClick(object sender, EventArgs e)
         {
             var button = (Button) sender;
             this.UserInputText.Text += button.Text;
         }
         
         /*
-         * 
+         * See above explanation for numberButton_Click
          */
-        private void backspaceButton_Click(object sender, EventArgs e)
+        private void BackSpaceButton_Click(object sender, EventArgs e)
         {
             if (this.UserInputText.Text != string.Empty)
             {
                 this.UserInputText.Text = this.UserInputText.Text.Remove(this.UserInputText.Text.Length - 1);
             }
-            
-            //presenter.backspace
         }
        
 

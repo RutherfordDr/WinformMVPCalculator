@@ -13,7 +13,6 @@ namespace WinFormDemo
             get;
             set;
         }
-        string Set(string value);
         string Update(string value);
 
         string Solve(string equation);

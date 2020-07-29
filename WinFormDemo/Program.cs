@@ -15,14 +15,11 @@ namespace WinFormDemo
         [STAThread]
         static void Main()
         {
-            
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Model model = new Model();
             Form1 form = new Form1(model);
             Application.Run(form);
-            
         }
     }
 }

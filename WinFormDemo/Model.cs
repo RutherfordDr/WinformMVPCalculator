@@ -29,12 +29,7 @@ namespace WinFormDemo
         {
 
         }
-        // Given a string it will set the equation variable as the string and return it.
-        public string Set(string value)
-        {
-            equation = value;
-            return equation;
-        }
+        
         // Takes in a string and adds it the equation and returns the whole equation.
         public string Update(string text)
         {
