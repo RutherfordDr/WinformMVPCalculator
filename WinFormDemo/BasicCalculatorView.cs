@@ -1,38 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace WinFormDemo
 {
-    /// <summary>
-    /// This is the View. It is responsible for displaying the data and taking in user 
-    /// commands.
-    /// </summary>
-    public partial class Form1 : Form, IView
+    public partial class BasicCalculatorView : UserControl, IBasicCalculatorView
     {
-        private Presenter presenter = null;
-        /*
-         * Constructor for Form1.
-         */
-        public Form1(Model model)
-        {
-            InitializeComponent();
-            presenter = new Presenter(this, model);
-        }
-
+        private BasicCalculatorPresenter bcPresenter = null;
         // Getter/Setter for UserInputTextValue. This corresponds to the forms UserInputText object.
         public string UserInputTextValue
         {
             get
             {
                 return UserInputText.Text;
+
             }
             set
             {
@@ -45,23 +32,41 @@ namespace WinFormDemo
             get
             {
                 return EquationLabel.Text;
+
             }
             set
             {
                 EquationLabel.Text = value;
             }
         }
+        public BasicCalculatorView()
+        {
+            InitializeComponent();
+            BasicCalculatorModel model = new BasicCalculatorModel();
+            bcPresenter = new BasicCalculatorPresenter(this, model);
+        }
+
         
+       public void ShowUserController()
+        {
+            Show();
+        }
+
+        public void HideUserController()
+        {
+            Hide();
+        }
+            
         /*
          * Tells presenter to update the equation and then solve the equation which also validates
          * if the equation is in the proper form.
          */
         private void EqualsButton_Click(object sender, EventArgs e)
         {
-            presenter.UpdateEquation();
-            presenter.SolveEquation();
+            bcPresenter.UpdateEquation();
+            bcPresenter.SolveEquation();
         }
-        
+
         /*
          *  Refactor to send to presenter
          */
@@ -69,7 +74,7 @@ namespace WinFormDemo
         {
             this.UserInputText.Text = String.Empty;
         }
-       
+
         /*
          * These don't go through presenter because they are fairly simple. They update
          * the input line. The model or presenter don't need to know these are changed until
@@ -80,7 +85,7 @@ namespace WinFormDemo
             var button = (Button) sender;
             this.UserInputText.Text += button.Text;
         }
-        
+
         /*
          * See above explanation for numberButton_Click
          */
@@ -88,10 +93,19 @@ namespace WinFormDemo
         {
             if (this.UserInputText.Text != string.Empty)
             {
-                this.UserInputText.Text = this.UserInputText.Text.Remove(this.UserInputText.Text.Length - 1);
+               this.UserInputText.Text = this.UserInputText.Text.Remove(this.UserInputText.Text.Length - 1);
             }
         }
-       
+
+        private void UserInputText_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                EqualsButton_Click(sender, e);
+            }
+        }
 
         
     }

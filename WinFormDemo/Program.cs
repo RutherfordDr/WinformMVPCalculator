@@ -10,15 +10,15 @@ namespace WinFormDemo
     static class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        ///     The main entry point for the application. Creating the form (View Manager) instantiates all the
+        ///     other User Controller views which in turn instantiate their own presenters.
         /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Model model = new Model();
-            Form1 form = new Form1(model);
+            ViewManagerView form = new ViewManagerView();
             Application.Run(form);
         }
     }

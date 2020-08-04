@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace WinFormDemo
 {
-    public interface IView
+    /// <summary>
+    ///     Interface for the BasicCalculator View. 
+    /// </summary>
+    public interface IBasicCalculatorView
     {
         string UserInputTextValue { get; set; }
         string EquationLabelValue { get; set; }
+        void ShowUserController();
+        void HideUserController();
+
     }
 }

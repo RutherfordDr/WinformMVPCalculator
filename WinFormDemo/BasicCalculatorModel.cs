@@ -10,13 +10,13 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 /// <summary>
-/// This is the Calculator Class. It is responsible for only taking in an equation, and outputting the 
-/// answer.
+///     This is the Calculator  model Class. It is responsible for only taking in an equation, and 
+///     outputting the answer. It is the calculator logic. 
 /// </summary>
 namespace WinFormDemo
 {
 
-    public class Model : IModel
+    public class BasicCalculatorModel : IBasicCalculatorModel
     {
         // Getter/Setter for the answer to the prev equation.
         public double answer
@@ -25,9 +25,10 @@ namespace WinFormDemo
         public string equation
         { get; set; }
         // Constructor for the model.
-        public Model()
+        public BasicCalculatorModel()
         {
-
+            equation = null;
+            answer = 0.0;
         }
         
         // Takes in a string and adds it the equation and returns the whole equation.

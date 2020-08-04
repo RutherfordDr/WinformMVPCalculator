@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace WinFormDemo
 {
-    public interface IModel
+    /// <summary>
+    ///     Interface of the calculator model.
+    /// </summary>
+    public interface IBasicCalculatorModel
     {
         string equation
         {
@@ -14,7 +17,6 @@ namespace WinFormDemo
             set;
         }
         string Update(string value);
-
         string Solve(string equation);
     }
 }

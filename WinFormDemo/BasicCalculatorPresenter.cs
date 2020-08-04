@@ -10,25 +10,24 @@ namespace WinFormDemo
 {
 
     /// <summary>
-    ///  This is the Presenter Class. It is responsible for communicating between the view and
-    ///  the model. It is also responsible for validating and formatting the data from the view
-    ///  and model.
-    /// 
+    ///     This is the Presenter Class. It is responsible for communicating between the view and
+    ///     the model. It handles all the logic for the view, and it reformats the data so it is
+    ///     presentable to the model. It updates the view after the model has done the appropriate
+    ///     work with the data.
     /// </summary>
-    public class Presenter
+    public class BasicCalculatorPresenter
     {
-        private readonly IView m_View;
-        private IModel m_Model;
+        private readonly IBasicCalculatorView m_View;
+        private IBasicCalculatorModel m_Model;
 
         /* 
          * Constructor to connect the Presenter to the View and Model which are referenced as
          * their interfaces to make unit testing easier.
          */
-        public Presenter(IView view, IModel model)
+        public BasicCalculatorPresenter(IBasicCalculatorView view, IBasicCalculatorModel model)
         {
             this.m_View = view;
             this.m_Model = model;
-
         }
         
         /* 
@@ -107,5 +106,7 @@ namespace WinFormDemo
             formattedInput = formattedInput.Replace(" ", "");
             return formattedInput;
         }
+
+        
     }
 }
